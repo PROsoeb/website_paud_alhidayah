@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Memanggil Tailwind CSS (Alat ajaib untuk mewarnai dan mengatur layout) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
     <!-- Mengatur agar seluruh website otomatis memakai font Quicksand -->
     <script>
@@ -27,6 +27,9 @@
 </head>
 <!-- Bagian Body adalah apa yang akan dilihat oleh pengunjung di layar -->
 <body>
+    <div id="banner-pengumuman" class="bg-amber-100 text-amber-800 text-center py-2 px-4 text-sm md:text-base font-semibold hidden">
+        <span id="teks-pengumuman">Memuat pengumuman...</span>
+    </div>
     <!-- NAVBAR MULAI -->
     <nav class="bg-white shadow-md fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -352,6 +355,20 @@
             // 3. Tombol akan menambah/menghapus class 'hidden' pada menu HP
             menu.classList.toggle('hidden');
         });
+
+        // ==========================================
+        // FITUR 3: MENGAMBIL DATA DARI CMS (data.json)
+        // ==========================================
+        fetch('data.json')
+            .then(response => response.json()) // Menerjemahkan file JSON
+            .then(data => {
+                // Jika judul dan isinya ada, tampilkan kotaknya
+                if(data.judul && data.isi) {
+                    document.getElementById('banner-pengumuman').classList.remove('hidden');
+                    document.getElementById('teks-pengumuman').innerText = data.judul + " : " + data.isi;
+                }
+            })
+            .catch(error => console.log('Tidak ada pengumuman baru.'));
         
     </script>
 
