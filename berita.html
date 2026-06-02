@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berita & Kegiatan | PAUD Al-Hidayah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased pt-28">
+
+    <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="font-extrabold text-xl md:text-2xl text-teal-600 tracking-tight flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    🏫 <span class="hidden sm:block">PAUD Al-Hidayah</span><span class="sm:hidden">Al-Hidayah</span>
+                </a>
+                
+                <div class="hidden md:flex space-x-8 font-semibold text-slate-600">
+                    <a href="index.html" class="hover:text-teal-600 transition-colors">Kembali ke Beranda</a>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <a href="index.html#ppdb" class="bg-slate-900 text-white px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:bg-slate-800 transition-all text-sm md:text-base">Daftar PPDB</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-10">
+        <div class="bg-teal-600 rounded-[2rem] p-10 md:p-14 text-white text-center relative overflow-hidden shadow-lg">
+            <div class="absolute -right-10 -top-10 w-64 h-64 bg-teal-400 rounded-full opacity-30 blur-3xl"></div>
+            <div class="relative z-10">
+                <h1 class="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">Arsip Berita & Kegiatan</h1>
+                <p class="text-teal-100 font-medium md:text-lg max-w-2xl mx-auto">Kumpulan informasi, prestasi, dan dokumentasi kegiatan putra-putri PAUD Al-Hidayah.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-20">
+        <div id="grid-berita-semua" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="col-span-full text-center text-slate-500 font-medium py-10">Memuat seluruh arsip berita... ⏳</div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-slate-200 py-10 text-center mt-auto">
+        <div class="font-extrabold text-2xl text-slate-300 mb-2">🏫 PAUD Al-Hidayah</div>
+        <p class="text-slate-500 font-medium text-sm">© 2026 PAUD Al-Hidayah. Semua Hak Cipta Dilindungi.</p>
+    </footer>
+
+    <script>
+        const gridBeritaSemua = document.getElementById('grid-berita-semua');
+        
+        if (gridBeritaSemua) {
+            // Trik Cache-Busting
+            fetch('berita.json?v=' + new Date().getTime())
+                .then(r => {
+                    if (!r.ok) throw new Error('File belum tersedia');
+                    return r.json();
+                })
+                .then(data => {
+                    if (data.artikel && data.artikel.length > 0) {
+                        gridBeritaSemua.innerHTML = ''; 
+                        
+                        // Balik urutan agar yang terbaru di atas, TANPA DI-SLICE (Tampilkan Semua)
+                        const semuaBerita = data.artikel.slice().reverse();
+                        
+                        semuaBerita.forEach((item, index) => {
+                            const fotoUrl = item.foto || 'https://via.placeholder.com/600x400?text=Berita+Sekolah';
+                            const cuplikan = item.cuplikan || 'Klik untuk membaca berita selengkapnya...';
+                            
+                            gridBeritaSemua.innerHTML += `
+                            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer" onclick="bacaBerita(${index})">
+                                <div class="relative h-56 overflow-hidden bg-slate-100">
+                                    <img src="${fotoUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">${item.kategori}</div>
+                                </div>
+                                <div class="p-6 md:p-8 flex flex-col h-[220px]">
+                                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors line-clamp-2">${item.judul}</h3>
+                                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed flex-grow">${cuplikan}</p>
+                                    <div class="flex items-center text-teal-600 font-bold text-sm mt-auto">
+                                        Baca Berita <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </div>
+                                </div>
+                            </div>`;
+                        });
+                        
+                        // Simpan ke memori untuk pop-up
+                        window.dataBerita = semuaBerita;
+                    } else {
+                        gridBeritaSemua.innerHTML = '<div class="col-span-full text-center text-slate-500 font-medium py-10">Belum ada berita yang dipublikasikan.</div>';
+                    }
+                })
+                .catch(() => {
+                    gridBeritaSemua.innerHTML = '<div class="col-span-full text-center text-slate-500 font-medium py-10">Gagal memuat berita. Silakan refresh halaman ini.</div>';
+                });
+        }
+
+        // Fungsi Pop-up Baca Berita
+        window.bacaBerita = function(index) {
+            const artikel = window.dataBerita[index];
+            const fotoUrl = artikel.foto || 'https://via.placeholder.com/600x400?text=Berita+Sekolah';
+            Swal.fire({
+                title: `<div class="text-2xl md:text-3xl font-extrabold text-slate-900 text-left mt-2">${artikel.judul}</div>`,
+                html: `
+                    <div class="text-left mt-4">
+                        <span class="inline-block bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-bold mb-4">${artikel.kategori}</span>
+                        <div class="rounded-2xl overflow-hidden mb-6 shadow-sm"><img src="${fotoUrl}" class="w-full object-cover max-h-72"></div>
+                        <div class="text-slate-600 text-sm md:text-base leading-relaxed whitespace-pre-line">${artikel.isi}</div>
+                    </div>`,
+                showCloseButton: true,
+                showConfirmButton: false,
+                customClass: { popup: 'rounded-[2rem] md:w-3/4 max-w-2xl p-6 md:p-8' }
+            });
+        };
+    </script>
+</body>
+</html>
