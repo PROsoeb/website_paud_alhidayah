@@ -1,17 +1,53 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: main # Pastikan ini sesuai dengan nama branch GitHub-mu (biasanya main atau master)
 
-media_folder: "images"
-public_folder: "/images"
+# PENTING: Pengaturan Folder Penyimpanan Foto
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
-  - name: "pengaturan"
-    label: "Pengaturan Website"
+  # ---------------------------------------------------
+  # 1. KOLEKSI PENGUMUMAN (Tetap dipertahankan)
+  # ---------------------------------------------------
+  - name: "pengumuman"
+    label: "📢 Pengumuman Sekolah"
     files:
-      - label: "Pengumuman Sekolah"
-        name: "pengumuman"
+      - label: "Teks Banner"
+        name: "banner"
         file: "data.json"
         fields:
-          - {label: "Judul Pengumuman", name: "judul", widget: "string"}
+          - {label: "Judul", name: "judul", widget: "string"}
           - {label: "Isi Pengumuman", name: "isi", widget: "text"}
+
+  # ---------------------------------------------------
+  # 2. KOLEKSI BERITA (Bisa tambah banyak artikel)
+  # ---------------------------------------------------
+  - name: "berita"
+    label: "📰 Berita & Kegiatan"
+    folder: "berita" # CMS akan membuat folder ini otomatis
+    create: true     # Mengizinkan Admin menekan tombol "Tambah Berita"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Judul Berita", name: "title", widget: "string"}
+      - {label: "Kategori", name: "kategori", widget: "select", options: ["Prestasi", "Kunjungan", "Perayaan", "Edukasi"]}
+      - {label: "Tanggal", name: "date", widget: "datetime"}
+      - {label: "Foto Utama", name: "thumbnail", widget: "image"}
+      - {label: "Isi Berita Lengkap", name: "body", widget: "markdown"}
+
+  # ---------------------------------------------------
+  # 3. KOLEKSI FASILITAS (Slider Kiri-Kanan)
+  # ---------------------------------------------------
+  - name: "halaman_fasilitas"
+    label: "🏫 Galeri Fasilitas"
+    files:
+      - label: "Daftar Foto Slider"
+        name: "daftar_fasilitas"
+        file: "fasilitas.json"
+        fields:
+          - label: "Slider Fasilitas"
+            name: "slider"
+            widget: "list" # WIDGET AJAIB: Memungkinkan Admin menambah kotak foto tak terbatas
+            fields:
+              - {label: "Nama Fasilitas", name: "nama", widget: "string"}
+              - {label: "Foto Fasilitas", name: "foto", widget: "image"}

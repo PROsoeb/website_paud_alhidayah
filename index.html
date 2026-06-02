@@ -1,377 +1,348 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <!-- Kode di bawah ini WAJIB agar website tidak hancur di HP -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAUD Al-Hidayah | Pendaftaran PPDB Online</title>
+    <!-- SEO Dasar -->
+    <title>PAUD Al-Hidayah | Modern & Islami</title>
+    <meta name="description" content="Pendaftaran online PAUD Al-Hidayah.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏫</text></svg>">
     
-    <meta name="description" content="Pendaftaran online PAUD Al-Hidayah. Kami menyediakan lingkungan belajar yang aman, Islami, dan menyenangkan untuk membangun generasi cerdas berakhlak mulia.">
-    
-    <meta name="keywords" content="PAUD Al-Hidayah, TK Islam, Kelompok Bermain, Sekolah Anak, Tasikmalaya, Ciomas, Pendidikan Anak Usia Dini">
-    <meta name="google-site-verification" content="IxuHHACxtvezMniaUqMfVddLz9jzpQQzIxVeLodXqcA" />   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏫</text></svg>">
-    
-
-
-    <!-- Memanggil Font 'Quicksand' dari Google Fonts agar tulisan ramah anak -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Memanggil Tailwind CSS (Alat ajaib untuk mewarnai dan mengatur layout) -->
+    <!-- Tailwind CSS & Identitas Netlify (Wajib untuk Panel Admin) -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Mengatur agar seluruh website otomatis memakai font Quicksand -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Quicksand', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- SweetAlert2 untuk Pop-up Notifikasi -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <!-- Font Modern: Plus Jakarta Sans (Memberikan kesan profesional ala startup) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+    </style>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        /* Menyembunyikan scrollbar bawaan browser untuk slider */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
+<body class="text-slate-800 antialiased">
 
-<!-- Bagian Body adalah apa yang akan dilihat oleh pengunjung di layar -->
-<body>
-   <div id="banner-pengumuman" class="fixed w-full top-16 z-40 bg-amber-100 text-amber-800 text-center py-2 px-4 text-sm md:text-base font-semibold shadow-md hidden transition-all duration-500">
-        <span id="teks-pengumuman">Memuat pengumuman...</span>
-    </div>
-    <!-- NAVBAR MULAI -->
-    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
+    <!-- 1. NAVBAR (Navigasi Atas) -->
+    <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="font-extrabold text-xl md:text-2xl text-teal-600 tracking-tight flex items-center gap-2">
+                    🏫 <span class="hidden sm:block">PAUD Al-Hidayah</span><span class="sm:hidden">Al-Hidayah</span>
+                </div>
                 
-                <!-- 1. Logo / Nama Sekolah -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="#" class="text-2xl font-bold text-teal-600">PAUD Al-Hidayah</a>
+                <!-- Menu Tengah (Sembunyi di HP, Muncul di Laptop) -->
+                <div class="hidden md:flex space-x-8 font-semibold text-slate-600">
+                    <a href="#" class="hover:text-teal-600 transition-colors">Beranda</a>
+                    <a href="#akademik" class="hover:text-teal-600 transition-colors">Informasi Akademik</a>
+                    <a href="#fasilitas" class="hover:text-teal-600 transition-colors">Fasilitas</a>
                 </div>
-
-                <!-- 2. Menu Laptop (Sembunyi di HP, Muncul di Laptop) -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#" class="text-slate-600 hover:text-teal-600 font-semibold transition-colors duration-300">Beranda</a>
-                    <a href="#" class="text-slate-600 hover:text-teal-600 font-semibold transition-colors duration-300">Tentang Kami</a>
-                    <a href="#" class="text-slate-600 hover:text-teal-600 font-semibold transition-colors duration-300">Program</a>
-                    <a href="#" class="bg-teal-500 text-white px-5 py-2 rounded-full hover:bg-teal-600 font-semibold transition-colors duration-300 shadow-sm hover:shadow-md">Daftar PPDB</a>
-                </div>
-
-                <!-- 3. Tombol Hamburger (Muncul di HP, Sembunyi di Laptop) -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="text-slate-600 hover:text-teal-600 focus:outline-none">
-                        <!-- Ikon Garis Tiga (SVG) -->
-                        <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                
+                <!-- Area Kanan (Tombol Daftar + Hamburger Menu) -->
+                <div class="flex items-center gap-3">
+                    <!-- Tombol Daftar -->
+                    <a href="#ppdb" class="bg-slate-900 text-white px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:bg-slate-800 transition-all text-sm md:text-base">Daftar PPDB</a>
+                    
+                    <!-- Tombol Hamburger (Hanya muncul di HP) -->
+                    <button id="btn-hamburger" class="md:hidden p-2 text-slate-600 hover:text-teal-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
                 </div>
-
             </div>
         </div>
 
-        <!-- 4. Menu HP Dropdown (Tersembunyi secara default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-lg absolute w-full">
-            <div class="px-4 pt-2 pb-4 space-y-2">
-                <a href="#" class="block px-3 py-2 text-slate-600 hover:text-teal-600 hover:bg-teal-50 font-semibold rounded-md">Beranda</a>
-                <a href="#" class="block px-3 py-2 text-slate-600 hover:text-teal-600 hover:bg-teal-50 font-semibold rounded-md">Tentang Kami</a>
-                <a href="#" class="block px-3 py-2 text-slate-600 hover:text-teal-600 hover:bg-teal-50 font-semibold rounded-md">Program</a>
-                <a href="#" class="block px-3 py-3 mt-4 text-center bg-teal-500 text-white font-semibold rounded-full hover:bg-teal-600">Daftar PPDB</a>
-            </div>
+        <!-- Menu Dropdown Mobile (Sembunyi secara default) -->
+        <div id="menu-mobile" class="hidden md:hidden bg-white border-t border-slate-100 shadow-xl absolute w-full rounded-b-3xl pb-4 pt-2 px-4 flex flex-col space-y-3 font-semibold text-slate-600">
+            <a href="#" class="block px-4 py-2 hover:bg-teal-50 hover:text-teal-600 rounded-xl transition-colors">Beranda</a>
+            <a href="#akademik" class="block px-4 py-2 hover:bg-teal-50 hover:text-teal-600 rounded-xl transition-colors">Informasi Akademik</a>
+            <a href="#fasilitas" class="block px-4 py-2 hover:bg-teal-50 hover:text-teal-600 rounded-xl transition-colors">Fasilitas</a>
         </div>
     </nav>
+    <!-- PITA PENGUMUMAN CMS (Posisi menggantung di bawah Navbar) -->
+    <div id="banner-pengumuman" class="fixed w-full top-20 z-40 bg-amber-100 text-amber-800 text-center py-2 px-4 text-sm font-semibold shadow-sm hidden">
+        <span id="teks-pengumuman">Memuat pengumuman...</span>
+    </div>
 
-    <!-- NAVBAR SELESAI -->
-
-    <!-- HERO SECTION MULAI -->
-    <section class="pt-24 pb-12 md:pt-32 md:pb-24 bg-teal-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
-                
-                <!-- Sisi Kiri: Teks & Tombol -->
-                <div class="w-full md:w-1/2 text-center md:text-left">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight mb-4">
-                        Membangun Generasi <br>
-                        <span class="text-teal-600">Cerdas & Berakhlak</span>
-                    </h1>
-                    <p class="text-lg text-slate-600 mb-8 max-w-lg mx-auto md:mx-0">
-                        Bermain, belajar, dan tumbuh bersama PAUD Al-Hidayah. Kami menyediakan lingkungan yang aman, Islami, dan menyenangkan untuk si kecil.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                        <a href="#" class="bg-teal-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-teal-600 transition-transform duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
-                            Daftar Sekarang
-                        </a>
-                        <a href="#" class="bg-white text-teal-600 border-2 border-teal-500 px-8 py-3 rounded-full font-bold text-lg hover:bg-teal-50 transition-colors duration-300">
-                            Lihat Program
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Sisi Kanan: Gambar/Ilustrasi -->
-                <div class="w-full md:w-1/2 flex justify-center">
-                    <!-- Untuk sementara kita pakai kotak warna sebagai pengganti foto anak-anak -->
-                    <div class="w-64 h-64 md:w-96 md:h-96 bg-teal-200 rounded-full border-8 border-white shadow-2xl flex items-center justify-center overflow-hidden">
-                        <span class="text-teal-700 font-bold text-xl text-center px-4">
-                            (Tempat Foto Anak<br>Bermain di Sini)
-                        </span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- HERO SECTION SELESAI -->
-
-    <!-- BAGIAN KEUNGGULAN MULAI -->
-    <section class="py-16 md:py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- 2. HERO SECTION & STATISTIK (Gaya Bento Grid) -->
+    <section class="pt-28 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        
+        <!-- Kotak Gambar Raksasa (Melengkung) -->
+        <div class="relative w-full h-[500px] md:h-[600px] rounded-[2rem] overflow-hidden shadow-2xl flex items-center justify-center text-center">
             
-            <!-- Judul Bagian -->
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Mengapa Memilih Kami?</h2>
-                <div class="w-24 h-1 bg-teal-500 mx-auto rounded-full"></div>
-            </div>
-
-            <!-- Grid 3 Kartu -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <!-- Kartu 1 -->
-                <div class="bg-slate-50 rounded-2xl p-8 text-center shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100">
-                    <div class="w-16 h-16 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <!-- Ikon Buku (SVG) -->
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">Kurikulum Islami</h3>
-                    <p class="text-slate-600">Menanamkan nilai-nilai agama, hafalan doa pendek, dan akhlak mulia sejak usia dini.</p>
-                </div>
-
-                <!-- Kartu 2 -->
-                <div class="bg-slate-50 rounded-2xl p-8 text-center shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100">
-                    <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <!-- Ikon Perisai (SVG) -->
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">Fasilitas Aman</h3>
-                    <p class="text-slate-600">Lingkungan bermain dan belajar yang dirancang khusus dengan standar keamanan anak.</p>
-                </div>
-
-                <!-- Kartu 3 -->
-                <div class="bg-slate-50 rounded-2xl p-8 text-center shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100">
-                    <div class="w-16 h-16 bg-blue-100 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <!-- Ikon Guru (SVG) -->
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-3">Guru Berpengalaman</h3>
-                    <p class="text-slate-600">Dididik oleh tenaga pengajar yang penyabar, profesional, dan mencintai dunia anak.</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- BAGIAN KEUNGGULAN SELESAI -->
-
-    <!-- BAGIAN GALERI MULAI -->
-    <section class="py-16 md:py-24 bg-slate-50 border-t border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Foto Background (Dari Pexels) & Lapisan Gelap -->
+            <img src="https://images.pexels.com/photos/8422200/pexels-photo-8422200.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Anak PAUD" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-teal-900/50 to-slate-900/80"></div>
             
-            <!-- Judul Bagian -->
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Galeri Kegiatan</h2>
-                <div class="w-24 h-1 bg-teal-500 mx-auto rounded-full mb-6"></div>
-                <p class="text-slate-600 max-w-2xl mx-auto">
-                    Intip keseruan dan momen berharga anak-anak selama bermain dan belajar di PAUD Al-Hidayah.
+            <!-- Teks di atas Gambar -->
+            <div class="relative z-10 px-4 max-w-3xl">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                    Cerdas, Ceria & <span class="text-teal-300">Berakhlak Mulia</span>
+                </h1>
+                <p class="text-base md:text-xl text-slate-200 mb-8 font-medium">
+                    Membangun fondasi pendidikan terbaik untuk si kecil di lingkungan yang aman, menyenangkan, dan Islami.
                 </p>
+                <!-- Tombol Aksi Ganda -->
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#akademik" class="bg-white text-slate-900 px-8 py-3 rounded-full font-bold hover:bg-slate-100 transition-all">Jelajahi Program</a>
+                    <a href="#ppdb" class="bg-teal-500 text-white px-8 py-3 rounded-full font-bold hover:bg-teal-400 border border-teal-400 transition-all">Daftar Sekarang</a>
+                </div>
             </div>
+        </div>
 
-            <!-- Grid Foto Galeri -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                
-                <!-- Kotak Foto 1 -->
-                <div class="overflow-hidden rounded-2xl shadow-sm aspect-square bg-teal-200">
-                    <img src="https://placehold.co/400x400/14b8a6/ffffff?text=Foto+1" alt="Kegiatan PAUD" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-                </div>
-
-                <!-- Kotak Foto 2 -->
-                <div class="overflow-hidden rounded-2xl shadow-sm aspect-square bg-amber-200">
-                    <img src="https://placehold.co/400x400/f59e0b/ffffff?text=Foto+2" alt="Kegiatan PAUD" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-                </div>
-
-                <!-- Kotak Foto 3 -->
-                <div class="overflow-hidden rounded-2xl shadow-sm aspect-square bg-blue-200">
-                    <img src="https://placehold.co/400x400/3b82f6/ffffff?text=Foto+3" alt="Kegiatan PAUD" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-                </div>
-
-                <!-- Kotak Foto 4 -->
-                <div class="overflow-hidden rounded-2xl shadow-sm aspect-square bg-rose-200">
-                    <img src="https://placehold.co/400x400/f43f5e/ffffff?text=Foto+4" alt="Kegiatan PAUD" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
-                </div>
-
+        <!-- 3. KOTAK STATISTIK SEKOLAH (Berjejer di bawah gambar) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <!-- Kotak 1 -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 text-center">
+                <div class="text-3xl font-extrabold text-teal-600 mb-1">2016</div>
+                <div class="text-slate-500 font-semibold text-sm">Tahun Didirikan</div>
             </div>
+            <!-- Kotak 2 -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 text-center">
+                <div class="text-3xl font-extrabold text-teal-600 mb-1">500+</div>
+                <div class="text-slate-500 font-semibold text-sm">Lulusan Sukses</div>
+            </div>
+            <!-- Kotak 3 -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 text-center">
+                <div class="text-3xl font-extrabold text-teal-600 mb-1">15+</div>
+                <div class="text-slate-500 font-semibold text-sm">Guru Tersertifikasi</div>
+            </div>
+        </div>
+    </section>
+    <!-- 4. INFORMASI AKADEMIK (Berita & Kegiatan) -->
+    <section id="akademik" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        
+        <!-- Judul Bagian -->
+        <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Informasi <span class="text-teal-600">Akademik</span></h2>
+                <p class="text-slate-500 mt-2 font-medium">Cuplikan kegiatan dan prestasi terbaru anak-anak didik kami.</p>
+            </div>
+            <a href="#" class="hidden md:inline-flex items-center text-slate-500 hover:text-teal-600 font-bold transition-colors">
+                Lihat Semua Berita
+                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+        </div>
+
+        <!-- Grid Berita (Bento Style) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <!-- Tombol Lihat Semua -->
-            <div class="text-center mt-10">
-                <a href="#" class="inline-block border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full font-semibold hover:bg-teal-50 transition-colors duration-300">
-                    Lihat Semua Foto
-                </a>
+            <!-- Kartu Berita 1 -->
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer">
+                <div class="relative h-56 overflow-hidden bg-slate-100">
+                    <!-- Foto Berita -->
+                    <img src="https://images.pexels.com/photos/8422207/pexels-photo-8422207.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Lomba Mewarnai" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <!-- Label Kategori -->
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">Prestasi</div>
+                </div>
+                <div class="p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">Juara 1 Lomba Mewarnai Tingkat Kota Tasikmalaya</h3>
+                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">Alhamdulillah, perwakilan dari kelas TK B berhasil meraih juara pertama dalam kompetisi mewarnai yang diselenggarakan bulan ini...</p>
+                    <div class="flex items-center text-teal-600 font-bold text-sm">
+                        Baca Berita 
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Berita 2 -->
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer">
+                <div class="relative h-56 overflow-hidden bg-slate-100">
+                    <img src="https://images.pexels.com/photos/8613088/pexels-photo-8613088.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Kunjungan Zoo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">Kunjungan</div>
+                </div>
+                <div class="p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">Belajar Mengenal Hewan Langsung di Habitatnya</h3>
+                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">Kegiatan luar ruang bulan ini diisi dengan pengenalan flora dan fauna untuk merangsang motorik dan rasa empati anak-anak sejak dini...</p>
+                    <div class="flex items-center text-teal-600 font-bold text-sm">
+                        Baca Berita 
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Berita 3 -->
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer">
+                <div class="relative h-56 overflow-hidden bg-slate-100">
+                    <img src="https://images.pexels.com/photos/8422194/pexels-photo-8422194.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Hari Kartini" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">Perayaan</div>
+                </div>
+                <div class="p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">Pawai Baju Adat Memperingati Hari Kartini</h3>
+                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">Suasana meriah tergambar dari wajah ceria anak-anak yang mengenakan berbagai pakaian adat nusantara untuk menumbuhkan rasa cinta tanah air...</p>
+                    <div class="flex items-center text-teal-600 font-bold text-sm">
+                        Baca Berita 
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                </div>
             </div>
 
         </div>
     </section>
-    <!-- BAGIAN GALERI SELESAI -->
-
-    <!--BAGIAN PENDAFTARAN-->
-    <section class="py-16 md:py-24 bg-white relative overflow-hidden">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="fasilitas" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-center">
             
-            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
-                
-                <div class="bg-teal-500 px-6 py-8 md:p-10 text-center">
-                    <h2 class="text-3xl font-bold text-white mb-2">Pendaftaran PPDB Online</h2>
-                    <p class="text-teal-50">Tahun Ajaran 2026/2027</p>
+            <div class="lg:col-span-1 bg-teal-600 rounded-[2rem] p-8 md:p-10 text-white flex flex-col justify-center shadow-lg relative overflow-hidden h-full min-h-[250px]">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-teal-400 rounded-full opacity-50 blur-2xl"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-3 leading-tight">Fasilitas<br>Sekolah</h2>
+                    <p class="text-teal-100 font-medium text-sm">Mendukung tumbuh kembang anak di lingkungan yang aman, nyaman, dan menyenangkan.</p>
                 </div>
+            </div>
 
-                <div class="p-6 md:p-10">
-                   <form name="form-pendaftaran">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            
-                            <div class="md:col-span-2">
-                                <label class="block text-slate-700 font-semibold mb-2">Nama Lengkap Anak</label>
-                                <input type="text" name="Nama_Anak" required placeholder="Masukkan nama anak..." class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300">
-                            </div>
+            <div class="lg:col-span-3 relative group">
+                
+                <button id="btn-prev" class="absolute -left-5 md:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-md text-teal-600 p-3 md:p-4 rounded-full shadow-xl transition-all duration-300 hover:bg-teal-50 hover:scale-110 opacity-0 pointer-events-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
 
-                            <div>
-                                <label class="block text-slate-700 font-semibold mb-2">Usia Anak</label>
-                                <select name="Usia_Anak" required class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-slate-600 bg-white">
-                                    <option value="">Pilih usia...</option>
-                                    <option value="3-4">3 - 4 Tahun (Kelompok Bermain)</option>
-                                    <option value="4-5">4 - 5 Tahun (TK A)</option>
-                                    <option value="5-6">5 - 6 Tahun (TK B)</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-slate-700 font-semibold mb-2">Nama Orang Tua / Wali</label>
-                                <input type="text" name="Nama_Orang_Tua" required placeholder="Masukkan nama orang tua..." class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300">
-                            </div>
-
-                            <div class="md:col-span-2">
-                                <label class="block text-slate-700 font-semibold mb-2">Nomor WhatsApp Aktif</label>
-                                <input type="tel" name="Nomor_WhatsApp" required placeholder="Contoh: 08123456789" class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300">
-                            </div>
-
-                            <div class="md:col-span-2 mt-4">
-                                <button type="submit" class="w-full bg-teal-500 text-white font-bold text-lg py-4 rounded-xl hover:bg-teal-600 transition-colors duration-300 shadow-md hover:shadow-lg">
-                                    Kirim Pendaftaran
-                                </button>
-                            </div>
-
+                <div id="slider-fasilitas" class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-4 pt-2 scroll-smooth">
+                    
+                    <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
+                        <img src="https://images.pexels.com/photos/8612920/pexels-photo-8612920.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Area Bermain Outdoor" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <h3 class="text-white font-bold text-lg md:text-xl">Area Bermain Outdoor</h3>
                         </div>
-                    </form>
+                    </div>
+
+                    <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
+                        <img src="https://images.pexels.com/photos/8422194/pexels-photo-8422194.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ruang Kelas" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <h3 class="text-white font-bold text-lg md:text-xl">Ruang Kelas Nyaman</h3>
+                        </div>
+                    </div>
+
+                    <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
+                        <img src="https://images.pexels.com/photos/8613088/pexels-photo-8613088.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Area Indoor" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <h3 class="text-white font-bold text-lg md:text-xl">Area Bermain Indoor</h3>
+                        </div>
+                    </div>
+
+                    <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
+                        <img src="https://images.pexels.com/photos/8422207/pexels-photo-8422207.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ruang UKS" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <h3 class="text-white font-bold text-lg md:text-xl">Ruang UKS Modern</h3>
+                        </div>
+                    </div>
+                    
                 </div>
 
+                <button id="btn-next" class="absolute -right-5 md:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-md text-teal-600 p-3 md:p-4 rounded-full shadow-xl transition-all duration-300 hover:bg-teal-50 hover:scale-110">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+                
             </div>
         </div>
     </section>
-    <!---BAGIAN PENDAFTARAN SELESAI-->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-slate-50 rounded-[3rem] my-10 border border-slate-100 shadow-sm">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Ekstrakurikuler <span class="text-teal-600">Unggulan</span></h2>
+            <p class="text-slate-500 mt-3 font-medium max-w-2xl mx-auto">Mengembangkan bakat, kreativitas, dan karakter Islami anak melalui kegiatan yang menyenangkan.</p>
+        </div>
 
-    <footer class="bg-slate-800 text-slate-300 py-12 border-t-4 border-teal-500">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100 hover:shadow-md transition-all group flex items-center gap-5 cursor-pointer">
+                <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">📖</div>
                 <div>
-                    <h3 class="text-2xl font-bold text-white mb-4">PAUD Al-Hidayah</h3>
-                    <p class="text-slate-400 mb-6">
-                        Membangun fondasi pendidikan usia dini yang berkarakter Islami, cerdas, dan kreatif di lingkungan yang ramah anak.
-                    </p>
+                    <h3 class="text-lg font-bold text-slate-900">Kelas Mengaji</h3>
+                    <p class="text-sm text-slate-500">Metode Iqra & Hafalan</p>
                 </div>
-
-                <div>
-                    <h4 class="text-lg font-bold text-white mb-4">Hubungi Kami</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-teal-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span>Jl. Pendidikan No. 123, Kota, Provinsi, 12345</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="w-6 h-6 text-teal-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                            <span>(021) 1234-5678</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-lg font-bold text-white mb-4">Jam Operasional</h4>
-                    <ul class="space-y-2 text-slate-400">
-                        <li class="flex justify-between border-b border-slate-700 pb-2">
-                            <span>Senin - Kamis</span>
-                            <span>07:30 - 11:30</span>
-                        </li>
-                        <li class="flex justify-between border-b border-slate-700 pb-2">
-                            <span>Jumat</span>
-                            <span>07:30 - 10:00</span>
-                        </li>
-                        <li class="flex justify-between text-rose-400 font-semibold pt-2">
-                            <span>Sabtu - Minggu</span>
-                            <span>Libur</span>
-                        </li>
-                    </ul>
-                </div>
-
             </div>
 
-            <div class="border-t border-slate-700 mt-12 pt-8 text-center text-sm text-slate-500">
-                <p>&copy; 2026 PAUD Al-Hidayah. Seluruh hak cipta dilindungi.</p>
+            <div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100 hover:shadow-md transition-all group flex items-center gap-5 cursor-pointer">
+                <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">💃</div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Seni Tari</h3>
+                    <p class="text-sm text-slate-500">Tari Daerah & Kreasi</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100 hover:shadow-md transition-all group flex items-center gap-5 cursor-pointer">
+                <div class="w-16 h-16 bg-rose-100 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">👨‍🍳</div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Little Chef</h3>
+                    <p class="text-sm text-slate-500">Kreasi Makanan Sehat</p>
+                </div>
             </div>
         </div>
+        
+        <div class="text-center mt-8">
+             <a href="#" class="inline-flex items-center text-teal-600 font-bold hover:text-teal-700 transition-colors">
+                Lihat Semua Kegiatan 
+                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+        </div>
+    </section>
+    <section id="ppdb" class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-20">
+        <div class="bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl flex flex-col md:flex-row border border-slate-800">
+            
+            <div class="md:w-5/12 p-10 md:p-14 text-white flex flex-col justify-center relative overflow-hidden">
+                <div class="absolute -left-10 -bottom-10 w-64 h-64 bg-teal-500 rounded-full opacity-20 blur-3xl"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Mari Bergabung Bersama Kami!</h2>
+                    <p class="text-slate-300 mb-8 font-medium leading-relaxed">Kouta penerimaan siswa baru terbatas. Amankan kursi untuk putra-putri Ayah/Bunda sekarang juga.</p>
+                    <ul class="space-y-4 text-slate-300 font-medium">
+                        <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Pendaftaran Cepat & Mudah</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Terhubung Langsung ke Sistem</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="md:w-7/12 bg-white p-10 md:p-14 md:rounded-l-[4rem] relative shadow-[-10px_0_30px_rgba(0,0,0,0.1)]">
+                <form id="form-ppdb" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Nama Lengkap Anak</label>
+                        <input type="text" name="nama_anak" required class="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Usia & Pilihan Kelas</label>
+                        <select name="usia" required class="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all appearance-none font-medium text-slate-600">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option value="Kelompok Bermain (3-4 Tahun)">Kelompok Bermain (3-4 Tahun)</option>
+                            <option value="TK A (4-5 Tahun)">TK A (4-5 Tahun)</option>
+                            <option value="TK B (5-6 Tahun)">TK B (5-6 Tahun)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Nama Orang Tua / Wali</label>
+                        <input type="text" name="nama_ortu" required class="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Nomor WhatsApp Aktif</label>
+                        <input type="tel" name="no_wa" required placeholder="Contoh: 08123456789" class="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all font-medium">
+                    </div>
+                    <button type="submit" class="w-full bg-teal-600 text-white font-bold py-4 rounded-2xl hover:bg-teal-700 hover:scale-[1.02] transition-all shadow-lg shadow-teal-200 mt-2 text-lg">
+                        Kirim Pendaftaran
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-slate-200 py-10 text-center">
+        <div class="font-extrabold text-2xl text-slate-300 mb-2">🏫 PAUD Al-Hidayah</div>
+        <p class="text-slate-500 font-medium text-sm">© 2026 PAUD Al-Hidayah. Semua Hak Cipta Dilindungi.</p>
     </footer>
 
-     <!-- Script untuk menjalankan tombol Hamburger Menu di HP -->
     <script>
-        // 1. Masukkan Web App URL dari Google Apps Script di dalam tanda kutip ini
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxUA2_2ramACDtmcNcgbZuHHChx888UfbeakEkJ8yeGF5OZV7XeYL3NtT-2WHsg-3Bf8g/exec';
-        const form = document.forms['form-pendaftaran'];
-        const btnKirim = document.querySelector('button[type="submit"]');
-
-        // 2. Apa yang terjadi saat tombol "Kirim Pendaftaran" diklik?
-        form.addEventListener('submit', e => {
-            e.preventDefault(); // Mencegah website melakukan refresh halaman
-            
-            // Mengubah tulisan tombol menjadi "Sedang Mengirim..."
-            btnKirim.innerHTML = "Sedang Mengirim...";
-            
-            // 3. Proses pengiriman data ke Google Sheets
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    // Jika sukses:
-                    alert('Alhamdulillah! Data pendaftaran berhasil dikirim.');
-                    form.reset(); // Mengosongkan form kembali
-                    btnKirim.innerHTML = "Kirim Pendaftaran"; // Mengembalikan tulisan tombol
-                })
-                .catch(error => {
-                    // Jika gagal (misal tidak ada internet):
-                    alert('Waduh, gagal mengirim. Pastikan internetmu lancar ya!');
-                    btnKirim.innerHTML = "Kirim Pendaftaran";
-                    console.error('Error!', error.message);
-                });
-        });
-
-        // 1. Kita tangkap tombol dan menu-nya dari HTML
-        const btn = document.getElementById('mobile-menu-button');
-        const menu = document.getElementById('mobile-menu');
-
-        // 2. Kita beri perintah: "Jika tombol diklik, jalankan fungsi ini"
-        btn.addEventListener('click', () => {
-            // 3. Tombol akan menambah/menghapus class 'hidden' pada menu HP
-            menu.classList.toggle('hidden');
-        });
-
-        // ==========================================
-        // FITUR 3: MENGAMBIL DATA DARI CMS (data.json)
-        // ==========================================
+        // ---------------------------------------------------
+        // 1. FITUR PENGUMUMAN CMS (Menarik data dari data.json)
+        // ---------------------------------------------------
         fetch('data.json')
-            .then(response => response.json()) // Menerjemahkan file JSON
+            .then(response => response.json())
             .then(data => {
-                // Jika judul dan isinya ada, tampilkan kotaknya
                 if(data.judul && data.isi) {
                     document.getElementById('banner-pengumuman').classList.remove('hidden');
                     document.getElementById('teks-pengumuman').innerText = data.judul + " : " + data.isi;
@@ -379,8 +350,118 @@
             })
             .catch(error => console.log('Tidak ada pengumuman baru.'));
 
+        // ---------------------------------------------------
+        // 2. FITUR HAMBURGER MENU (Navigasi Mobile)
+        // ---------------------------------------------------
+        const btnHamburger = document.getElementById('btn-hamburger');
+        const menuMobile = document.getElementById('menu-mobile');
 
+        if (btnHamburger && menuMobile) {
+            // Buka/tutup menu saat tombol diklik
+            btnHamburger.addEventListener('click', () => {
+                menuMobile.classList.toggle('hidden');
+            });
+
+            // Tutup menu otomatis jika salah satu link diklik
+            const linkMobile = menuMobile.querySelectorAll('a');
+            linkMobile.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuMobile.classList.add('hidden');
+                });
+            });
+        }
+
+        // ---------------------------------------------------
+        // 3. FITUR SLIDER FASILITAS (Panah Kiri Kanan Interaktif)
+        // ---------------------------------------------------
+        const slider = document.getElementById('slider-fasilitas');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+
+        if (slider && btnPrev && btnNext) {
+            const checkArrows = () => {
+                // Sembunyikan panah kiri jika mentok kiri
+                if (slider.scrollLeft <= 0) {
+                    btnPrev.classList.add('opacity-0', 'pointer-events-none');
+                    btnPrev.classList.remove('opacity-100');
+                } else {
+                    btnPrev.classList.remove('opacity-0', 'pointer-events-none');
+                    btnPrev.classList.add('opacity-100');
+                }
+
+                // Sembunyikan panah kanan jika mentok kanan (Toleransi 2px untuk bug browser)
+                if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2) {
+                    btnNext.classList.add('opacity-0', 'pointer-events-none');
+                    btnNext.classList.remove('opacity-100');
+                } else {
+                    btnNext.classList.remove('opacity-0', 'pointer-events-none');
+                    btnNext.classList.add('opacity-100');
+                }
+            };
+
+            btnNext.addEventListener('click', () => {
+                slider.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+
+            btnPrev.addEventListener('click', () => {
+                slider.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+
+            slider.addEventListener('scroll', checkArrows);
+            checkArrows(); // Panggil di awal
+        }
+
+        // ---------------------------------------------------
+        // 4. FITUR FORMULIR PPDB (Kirim Data Latar Belakang)
+        // ---------------------------------------------------
+        const formPPDB = document.getElementById('form-ppdb');
+        
+        if (formPPDB) {
+            const btnSubmit = formPPDB.querySelector('button[type="submit"]');
+            
+            // ⚠️ PENTING: PASTIKAN LINK INI SUDAH DIGANTI DENGAN LINK GOOGLE SCRIPT-MU!
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxLB_nKWQyF0tIEIoBdqtnpPURvycuawsFYFiK3aJhrV4tL3EI7AV_u-Gx8pzz6O4gK0Q/exec';
+
+            formPPDB.addEventListener('submit', e => {
+                e.preventDefault();
+                
+                // Animasi Loading pada tombol
+                const originalText = btnSubmit.innerHTML;
+                btnSubmit.innerHTML = 'Mengirim Data... ⏳';
+                btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
+                btnSubmit.disabled = true;
+
+                // Proses pengiriman data
+                fetch(scriptURL, { method: 'POST', body: new FormData(formPPDB)})
+                    .then(response => {
+                        btnSubmit.innerHTML = originalText;
+                        btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
+                        btnSubmit.disabled = false;
+                        formPPDB.reset();
+                        
+                        Swal.fire({
+                            title: 'Pendaftaran Berhasil!',
+                            text: 'Data putra/putri Anda telah masuk ke sistem kami.',
+                            icon: 'success',
+                            confirmButtonColor: '#0d9488',
+                            customClass: { popup: 'rounded-3xl' }
+                        });
+                    })
+                    .catch(error => {
+                        btnSubmit.innerHTML = originalText;
+                        btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
+                        btnSubmit.disabled = false;
+                        
+                        Swal.fire({
+                            title: 'Oops!',
+                            text: 'Terjadi kesalahan jaringan. Silakan coba lagi.',
+                            icon: 'error',
+                            confirmButtonColor: '#0d9488'
+                        });
+                    });
+            });
+        }
     </script>
-
+    
 </body>
 </html>
