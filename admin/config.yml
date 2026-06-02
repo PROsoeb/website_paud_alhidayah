@@ -20,20 +20,25 @@ collections:
           - {label: "Judul", name: "judul", widget: "string"}
           - {label: "Isi Pengumuman", name: "isi", widget: "text"}
 
+ # ---------------------------------------------------
+  # 2. KOLEKSI BERITA (Diubah menjadi JSON List)
   # ---------------------------------------------------
-  # 2. KOLEKSI BERITA (Bisa tambah banyak artikel)
-  # ---------------------------------------------------
-  - name: "berita"
+  - name: "halaman_berita"
     label: "📰 Berita & Kegiatan"
-    folder: "berita" # CMS akan membuat folder ini otomatis
-    create: true     # Mengizinkan Admin menekan tombol "Tambah Berita"
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - {label: "Judul Berita", name: "title", widget: "string"}
-      - {label: "Kategori", name: "kategori", widget: "select", options: ["Prestasi", "Kunjungan", "Perayaan", "Edukasi"]}
-      - {label: "Tanggal", name: "date", widget: "datetime"}
-      - {label: "Foto Utama", name: "thumbnail", widget: "image"}
-      - {label: "Isi Berita Lengkap", name: "body", widget: "markdown"}
+    files:
+      - label: "Daftar Berita"
+        name: "daftar_berita"
+        file: "berita.json"
+        fields:
+          - label: "Daftar Artikel"
+            name: "artikel"
+            widget: "list"
+            fields:
+              - {label: "Judul Berita", name: "judul", widget: "string"}
+              - {label: "Kategori", name: "kategori", widget: "select", options: ["Prestasi", "Kunjungan", "Perayaan", "Edukasi", "Lainnya"]}
+              - {label: "Foto Utama", name: "foto", widget: "image"}
+              - {label: "Cuplikan Singkat", name: "cuplikan", widget: "string", hint: "Teks singkat 1 kalimat untuk di halaman depan."}
+              - {label: "Isi Berita Lengkap", name: "isi", widget: "text"}
 
   # ---------------------------------------------------
   # 3. KOLEKSI FASILITAS (Slider Kiri-Kanan)
