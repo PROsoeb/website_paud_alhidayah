@@ -276,33 +276,47 @@
         // 4. Fitur Berita & Pop-up
         const gridBerita = document.getElementById('grid-berita');
         if (gridBerita) {
-            fetch('berita.json').then(r => r.json()).then(data => {
-                if (data.artikel && data.artikel.length > 0) {
-                    gridBerita.innerHTML = ''; 
-                    const beritaTerbaru = data.artikel.slice().reverse().slice(0, 3);
-                    
-                    beritaTerbaru.forEach((item, index) => {
-                        const fotoUrl = item.foto || 'https://via.placeholder.com/600x400?text=Berita+Sekolah';
-                        const cuplikan = item.cuplikan || 'Klik untuk membaca berita selengkapnya...';
+            // Mencegah layar kosong: Munculkan teks loading
+            gridBerita.innerHTML = '<div class="col-span-full text-center text-slate-500 font-medium py-10">Memuat berita terbaru... ⏳</div>';
+            
+            // Trik Cache-Busting: Memaksa browser mengambil file terbaru
+            fetch('berita.json?v=' + new Date().getTime())
+                .then(r => {
+                    if (!r.ok) throw new Error('File belum tersedia');
+                    return r.json();
+                })
+                .then(data => {
+                    if (data.artikel && data.artikel.length > 0) {
+                        gridBerita.innerHTML = ''; 
+                        const beritaTerbaru = data.artikel.slice().reverse().slice(0, 3);
                         
-                        gridBerita.innerHTML += `
-                        <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer" onclick="bacaBerita(${index})">
-                            <div class="relative h-56 overflow-hidden bg-slate-100">
-                                <img src="${fotoUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">${item.kategori}</div>
-                            </div>
-                            <div class="p-6 md:p-8">
-                                <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">${item.judul}</h3>
-                                <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">${cuplikan}</p>
-                                <div class="flex items-center text-teal-600 font-bold text-sm">
-                                    Baca Berita <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        beritaTerbaru.forEach((item, index) => {
+                            const fotoUrl = item.foto || 'https://via.placeholder.com/600x400?text=Berita+Sekolah';
+                            const cuplikan = item.cuplikan || 'Klik untuk membaca berita selengkapnya...';
+                            
+                            gridBerita.innerHTML += `
+                            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer" onclick="bacaBerita(${index})">
+                                <div class="relative h-56 overflow-hidden bg-slate-100">
+                                    <img src="${fotoUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">${item.kategori}</div>
                                 </div>
-                            </div>
-                        </div>`;
-                    });
-                    window.dataBerita = beritaTerbaru;
-                }
-            }).catch(() => {});
+                                <div class="p-6 md:p-8">
+                                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">${item.judul}</h3>
+                                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">${cuplikan}</p>
+                                    <div class="flex items-center text-teal-600 font-bold text-sm">
+                                        Baca Berita <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </div>
+                                </div>
+                            </div>`;
+                        });
+                        window.dataBerita = beritaTerbaru;
+                    } else {
+                        gridBerita.innerHTML = '<div class="col-span-full text-center text-slate-500 font-medium py-10">Belum ada berita yang dipublikasikan.</div>';
+                    }
+                })
+                .catch(() => {
+                    gridBerita.innerHTML = '<div class="col-span-full text-center text-slate-500 font-medium py-10">Menunggu pembaruan sistem. Silakan refresh halaman ini.</div>';
+                });
         }
 
         window.bacaBerita = function(index) {
@@ -321,7 +335,6 @@
                 customClass: { popup: 'rounded-[2rem] md:w-3/4 max-w-2xl p-6 md:p-8' }
             });
         };
-
         // 5. PPDB Google Sheets
         const formPPDB = document.getElementById('form-ppdb');
         if (formPPDB) {
