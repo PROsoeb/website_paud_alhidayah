@@ -97,285 +97,88 @@
             </div>
         </div>
 
-        <!-- 3. KOTAK STATISTIK SEKOLAH (Berjejer di bawah gambar) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-            <!-- Kotak 1 -->
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 text-center">
                 <div class="text-3xl font-extrabold text-teal-600 mb-1">2016</div>
                 <div class="text-slate-500 font-semibold text-sm">Tahun Didirikan</div>
             </div>
-            <!-- Kotak 2 -->
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 text-center">
                 <div class="text-3xl font-extrabold text-teal-600 mb-1">500+</div>
                 <div class="text-slate-500 font-semibold text-sm">Lulusan Sukses</div>
             </div>
-            <!-- Kotak 3 -->
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 text-center">
                 <div class="text-3xl font-extrabold text-teal-600 mb-1">15+</div>
                 <div class="text-slate-500 font-semibold text-sm">Guru Tersertifikasi</div>
             </div>
         </div>
     </section>
-    <!-- 4. INFORMASI AKADEMIK (Berita & Kegiatan) -->
+
     <section id="akademik" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-
-        <div id="grid-berita" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    ```
-
-### Langkah 3: Menyuntikkan Pelayan JavaScript
-Gulir ke paling bawah, ke area **`<script>` MASTER SCRIPT**. Taruh kode ini di bagian paling bawah (sebelum penutup `</script>`):
-
-```javascript
-        // -----------------------------------------------------------------
-        // 5. FITUR BERITA (Data Dinamis & Pop-up Baca Berita)
-        // -----------------------------------------------------------------
-        const gridBerita = document.getElementById('grid-berita');
-        
-        if (gridBerita) {
-            fetch('berita.json')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.artikel && data.artikel.length > 0) {
-                        // Kosongkan foto dummy (Pexels) dari layar
-                        gridBerita.innerHTML = ''; 
-
-                        // Ambil 3 berita terbaru (dibalik urutannya)
-                        const beritaTerbaru = data.artikel.slice().reverse().slice(0, 3);
-
-                        beritaTerbaru.forEach((item, index) => {
-                            const fotoUrl = item.foto ? item.foto : 'https://via.placeholder.com/600x400?text=Berita+Sekolah';
-                            const cuplikan = item.cuplikan ? item.cuplikan : 'Klik untuk membaca berita selengkapnya...';
-
-                            const cardHTML = `
-                            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer" onclick="bacaBerita({index})">
-                                <div class="relative h-56 overflow-hidden bg-slate-100">
-                                    <img src="${fotoUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">${item.kategori}</div>
-                                </div>
-                                <div class="p-6 md:p-8">
-                                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">${item.judul}</h3>
-                                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">${cuplikan}</p>
-                                    <div class="flex items-center text-teal-600 font-bold text-sm">
-                                        Baca Berita 
-                                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                    </div>
-                                </div>
-                            </div>`;
-                            gridBerita.innerHTML += cardHTML;
-                        });
-
-                        // Simpan data berita ke memori agar bisa dibaca saat diklik
-                        window.dataBerita = beritaTerbaru;
-                    }
-                })
-                .catch(error => console.log('Menunggu data berita dari CMS...'));
-        }
-
-        // Fungsi Ajaib: Memunculkan pop-up saat berita diklik
-        window.bacaBerita = function(index) {
-            const artikel = window.dataBerita[index];
-            const fotoUrl = artikel.foto ? artikel.foto : 'https://via.placeholder.com/600x400?text=Berita+Sekolah';
-            
-            Swal.fire({
-                title: `<div class="text-2xl md:text-3xl font-extrabold text-slate-900 text-left mt-2">${artikel.judul}</div>`,
-                html: `
-                    <div class="text-left mt-4">
-                        <span class="inline-block bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-bold mb-4">${artikel.kategori}</span>
-                        <div class="rounded-2xl overflow-hidden mb-6 shadow-sm">
-                            <img src="${fotoUrl}" class="w-full object-cover max-h-72">
-                        </div>
-                        <div class="text-slate-600 text-sm md:text-base leading-relaxed whitespace-pre-line">${artikel.isi}</div>
-                    </div>
-                `,
-                showCloseButton: true,
-                showConfirmButton: false, // Sembunyikan tombol "OK" agar bersih
-                customClass: {
-                    popup: 'rounded-[2rem] md:w-3/4 max-w-2xl p-6 md:p-8'
-                }
-            });
-        };
-        
-        <!-- Judul Bagian -->
         <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:justify-between md:items-end gap-4">
             <div>
                 <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Informasi <span class="text-teal-600">Akademik</span></h2>
                 <p class="text-slate-500 mt-2 font-medium">Cuplikan kegiatan dan prestasi terbaru anak-anak didik kami.</p>
             </div>
-            <a href="#" class="hidden md:inline-flex items-center text-slate-500 hover:text-teal-600 font-bold transition-colors">
-                Lihat Semua Berita
-                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-            </a>
         </div>
-
-        <!-- Grid Berita (Bento Style) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <!-- Kartu Berita 1 -->
-            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer">
-                <div class="relative h-56 overflow-hidden bg-slate-100">
-                    <!-- Foto Berita -->
-                    <img src="https://images.pexels.com/photos/8422207/pexels-photo-8422207.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Lomba Mewarnai" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    <!-- Label Kategori -->
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">Prestasi</div>
-                </div>
-                <div class="p-6 md:p-8">
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">Juara 1 Lomba Mewarnai Tingkat Kota Tasikmalaya</h3>
-                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">Alhamdulillah, perwakilan dari kelas TK B berhasil meraih juara pertama dalam kompetisi mewarnai yang diselenggarakan bulan ini...</p>
-                    <div class="flex items-center text-teal-600 font-bold text-sm">
-                        Baca Berita 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kartu Berita 2 -->
-            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer">
-                <div class="relative h-56 overflow-hidden bg-slate-100">
-                    <img src="https://images.pexels.com/photos/8613088/pexels-photo-8613088.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Kunjungan Zoo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">Kunjungan</div>
-                </div>
-                <div class="p-6 md:p-8">
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">Belajar Mengenal Hewan Langsung di Habitatnya</h3>
-                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">Kegiatan luar ruang bulan ini diisi dengan pengenalan flora dan fauna untuk merangsang motorik dan rasa empati anak-anak sejak dini...</p>
-                    <div class="flex items-center text-teal-600 font-bold text-sm">
-                        Baca Berita 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kartu Berita 3 -->
-            <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer">
-                <div class="relative h-56 overflow-hidden bg-slate-100">
-                    <img src="https://images.pexels.com/photos/8422194/pexels-photo-8422194.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Hari Kartini" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">Perayaan</div>
-                </div>
-                <div class="p-6 md:p-8">
-                    <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">Pawai Baju Adat Memperingati Hari Kartini</h3>
-                    <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">Suasana meriah tergambar dari wajah ceria anak-anak yang mengenakan berbagai pakaian adat nusantara untuk menumbuhkan rasa cinta tanah air...</p>
-                    <div class="flex items-center text-teal-600 font-bold text-sm">
-                        Baca Berita 
-                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        
+        <div id="grid-berita" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
     </section>
+
     <section id="fasilitas" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-center">
-            
             <div class="lg:col-span-1 bg-teal-600 rounded-[2rem] p-8 md:p-10 text-white flex flex-col justify-center shadow-lg relative overflow-hidden h-full min-h-[250px]">
                 <div class="absolute -right-10 -top-10 w-40 h-40 bg-teal-400 rounded-full opacity-50 blur-2xl"></div>
                 <div class="relative z-10">
                     <h2 class="text-3xl md:text-4xl font-extrabold mb-3 leading-tight">Fasilitas<br>Sekolah</h2>
-                    <p class="text-teal-100 font-medium text-sm">Mendukung tumbuh kembang anak di lingkungan yang aman, nyaman, dan menyenangkan.</p>
+                    <p class="text-teal-100 font-medium text-sm">Lingkungan aman, nyaman, dan menyenangkan.</p>
                 </div>
             </div>
 
             <div class="lg:col-span-3 relative group">
-                
                 <button id="btn-prev" class="absolute -left-5 md:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-md text-teal-600 p-3 md:p-4 rounded-full shadow-xl transition-all duration-300 hover:bg-teal-50 hover:scale-110 opacity-0 pointer-events-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
 
-                <div id="slider-fasilitas" class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-4 pt-2 scroll-smooth">
-                    
-                    <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
-                        <img src="https://images.pexels.com/photos/8612920/pexels-photo-8612920.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Area Bermain Outdoor" class="absolute inset-0 w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                        <div class="absolute bottom-6 left-6 right-6">
-                            <h3 class="text-white font-bold text-lg md:text-xl">Area Bermain Outdoor</h3>
-                        </div>
-                    </div>
-
-                    <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
-                        <img src="https://images.pexels.com/photos/8422194/pexels-photo-8422194.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ruang Kelas" class="absolute inset-0 w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                        <div class="absolute bottom-6 left-6 right-6">
-                            <h3 class="text-white font-bold text-lg md:text-xl">Ruang Kelas Nyaman</h3>
-                        </div>
-                    </div>
-
-                    <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
-                        <img src="https://images.pexels.com/photos/8613088/pexels-photo-8613088.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Area Indoor" class="absolute inset-0 w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                        <div class="absolute bottom-6 left-6 right-6">
-                            <h3 class="text-white font-bold text-lg md:text-xl">Area Bermain Indoor</h3>
-                        </div>
-                    </div>
-
-                    <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
-                        <img src="https://images.pexels.com/photos/8422207/pexels-photo-8422207.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ruang UKS" class="absolute inset-0 w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                        <div class="absolute bottom-6 left-6 right-6">
-                            <h3 class="text-white font-bold text-lg md:text-xl">Ruang UKS Modern</h3>
-                        </div>
-                    </div>
-                    
-                </div>
+                <div id="slider-fasilitas" class="flex gap-4 md:gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-4 pt-2 scroll-smooth"></div>
 
                 <button id="btn-next" class="absolute -right-5 md:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-md text-teal-600 p-3 md:p-4 rounded-full shadow-xl transition-all duration-300 hover:bg-teal-50 hover:scale-110">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
                 </button>
-                
             </div>
         </div>
     </section>
+
     <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-slate-50 rounded-[3rem] my-10 border border-slate-100 shadow-sm">
         <div class="text-center mb-10">
             <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">Ekstrakurikuler <span class="text-teal-600">Unggulan</span></h2>
-            <p class="text-slate-500 mt-3 font-medium max-w-2xl mx-auto">Mengembangkan bakat, kreativitas, dan karakter Islami anak melalui kegiatan yang menyenangkan.</p>
+            <p class="text-slate-500 mt-3 font-medium max-w-2xl mx-auto">Mengembangkan bakat, kreativitas, dan karakter Islami anak.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100 hover:shadow-md transition-all group flex items-center gap-5 cursor-pointer">
                 <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">📖</div>
-                <div>
-                    <h3 class="text-lg font-bold text-slate-900">Kelas Mengaji</h3>
-                    <p class="text-sm text-slate-500">Metode Iqra & Hafalan</p>
-                </div>
+                <div><h3 class="text-lg font-bold text-slate-900">Kelas Mengaji</h3><p class="text-sm text-slate-500">Metode Iqra & Hafalan</p></div>
             </div>
-
             <div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100 hover:shadow-md transition-all group flex items-center gap-5 cursor-pointer">
                 <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">💃</div>
-                <div>
-                    <h3 class="text-lg font-bold text-slate-900">Seni Tari</h3>
-                    <p class="text-sm text-slate-500">Tari Daerah & Kreasi</p>
-                </div>
+                <div><h3 class="text-lg font-bold text-slate-900">Seni Tari</h3><p class="text-sm text-slate-500">Tari Daerah & Kreasi</p></div>
             </div>
-
             <div class="bg-white rounded-[2rem] p-5 shadow-sm border border-slate-100 hover:shadow-md transition-all group flex items-center gap-5 cursor-pointer">
                 <div class="w-16 h-16 bg-rose-100 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">👨‍🍳</div>
-                <div>
-                    <h3 class="text-lg font-bold text-slate-900">Little Chef</h3>
-                    <p class="text-sm text-slate-500">Kreasi Makanan Sehat</p>
-                </div>
+                <div><h3 class="text-lg font-bold text-slate-900">Little Chef</h3><p class="text-sm text-slate-500">Kreasi Makanan Sehat</p></div>
             </div>
         </div>
-        
-        <div class="text-center mt-8">
-             <a href="#" class="inline-flex items-center text-teal-600 font-bold hover:text-teal-700 transition-colors">
-                Lihat Semua Kegiatan 
-                <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-            </a>
-        </div>
     </section>
+
     <section id="ppdb" class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-20">
         <div class="bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl flex flex-col md:flex-row border border-slate-800">
-            
             <div class="md:w-5/12 p-10 md:p-14 text-white flex flex-col justify-center relative overflow-hidden">
                 <div class="absolute -left-10 -bottom-10 w-64 h-64 bg-teal-500 rounded-full opacity-20 blur-3xl"></div>
                 <div class="relative z-10">
-                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Mari Bergabung Bersama Kami!</h2>
-                    <p class="text-slate-300 mb-8 font-medium leading-relaxed">Kouta penerimaan siswa baru terbatas. Amankan kursi untuk putra-putri Ayah/Bunda sekarang juga.</p>
-                    <ul class="space-y-4 text-slate-300 font-medium">
-                        <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Pendaftaran Cepat & Mudah</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-teal-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Terhubung Langsung ke Sistem</li>
-                    </ul>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">Mari Bergabung!</h2>
+                    <p class="text-slate-300 mb-8 font-medium leading-relaxed">Amankan kursi untuk putra-putri Ayah/Bunda sekarang juga.</p>
                 </div>
             </div>
-
             <div class="md:w-7/12 bg-white p-10 md:p-14 md:rounded-l-[4rem] relative shadow-[-10px_0_30px_rgba(0,0,0,0.1)]">
                 <form id="form-ppdb" class="space-y-6">
                     <div>
@@ -397,7 +200,7 @@ Gulir ke paling bawah, ke area **`<script>` MASTER SCRIPT**. Taruh kode ini di b
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Nomor WhatsApp Aktif</label>
-                        <input type="tel" name="no_wa" required placeholder="Contoh: 08123456789" class="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all font-medium">
+                        <input type="tel" name="no_wa" required class="w-full px-5 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all font-medium">
                     </div>
                     <button type="submit" class="w-full bg-teal-600 text-white font-bold py-4 rounded-2xl hover:bg-teal-700 hover:scale-[1.02] transition-all shadow-lg shadow-teal-200 mt-2 text-lg">
                         Kirim Pendaftaran
@@ -413,165 +216,141 @@ Gulir ke paling bawah, ke area **`<script>` MASTER SCRIPT**. Taruh kode ini di b
     </footer>
 
     <script>
-        // ---------------------------------------------------
-        // 1. FITUR PENGUMUMAN CMS (Menarik data dari data.json)
-        // ---------------------------------------------------
-        fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                if(data.judul && data.isi) {
-                    document.getElementById('banner-pengumuman').classList.remove('hidden');
-                    document.getElementById('teks-pengumuman').innerText = data.judul + " : " + data.isi;
-                }
-            })
-            .catch(error => console.log('Tidak ada pengumuman baru.'));
+        // 1. Pengumuman Banner
+        fetch('data.json').then(r => r.json()).then(data => {
+            if(data.judul && data.isi) {
+                document.getElementById('banner-pengumuman').classList.remove('hidden');
+                document.getElementById('teks-pengumuman').innerText = data.judul + " : " + data.isi;
+            }
+        }).catch(() => {});
 
-        // ---------------------------------------------------
-        // 2. FITUR HAMBURGER MENU (Navigasi Mobile)
-        // ---------------------------------------------------
+        // 2. Hamburger Menu
         const btnHamburger = document.getElementById('btn-hamburger');
         const menuMobile = document.getElementById('menu-mobile');
-
         if (btnHamburger && menuMobile) {
-            // Buka/tutup menu saat tombol diklik
-            btnHamburger.addEventListener('click', () => {
-                menuMobile.classList.toggle('hidden');
-            });
-
-            // Tutup menu otomatis jika salah satu link diklik
-            const linkMobile = menuMobile.querySelectorAll('a');
-            linkMobile.forEach(link => {
-                link.addEventListener('click', () => {
-                    menuMobile.classList.add('hidden');
-                });
-            });
+            btnHamburger.addEventListener('click', () => menuMobile.classList.toggle('hidden'));
+            menuMobile.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menuMobile.classList.add('hidden')));
         }
 
-        // ---------------------------------------------------
-        // 3. FITUR SLIDER FASILITAS (Panah Kiri Kanan Interaktif)
-        // ---------------------------------------------------
+        // 3. Slider Fasilitas & Fetch CMS
         const slider = document.getElementById('slider-fasilitas');
         const btnPrev = document.getElementById('btn-prev');
         const btnNext = document.getElementById('btn-next');
-
+        
         if (slider && btnPrev && btnNext) {
             const checkArrows = () => {
-                // Sembunyikan panah kiri jika mentok kiri
                 if (slider.scrollLeft <= 0) {
                     btnPrev.classList.add('opacity-0', 'pointer-events-none');
-                    btnPrev.classList.remove('opacity-100');
                 } else {
                     btnPrev.classList.remove('opacity-0', 'pointer-events-none');
-                    btnPrev.classList.add('opacity-100');
                 }
-
-                // Sembunyikan panah kanan jika mentok kanan (Toleransi 2px untuk bug browser)
                 if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2) {
                     btnNext.classList.add('opacity-0', 'pointer-events-none');
-                    btnNext.classList.remove('opacity-100');
                 } else {
                     btnNext.classList.remove('opacity-0', 'pointer-events-none');
-                    btnNext.classList.add('opacity-100');
                 }
             };
-
-            btnNext.addEventListener('click', () => {
-                slider.scrollBy({ left: 300, behavior: 'smooth' });
-            });
-
-            btnPrev.addEventListener('click', () => {
-                slider.scrollBy({ left: -300, behavior: 'smooth' });
-            });
-
+            btnNext.addEventListener('click', () => slider.scrollBy({ left: 300, behavior: 'smooth' }));
+            btnPrev.addEventListener('click', () => slider.scrollBy({ left: -300, behavior: 'smooth' }));
             slider.addEventListener('scroll', checkArrows);
-            checkArrows(); // Panggil di awal
 
-            // -----------------------------------------------------------------
-            // (BARU) SUNTIKAN DATA DINAMIS DARI CMS UNTUK FASILITAS
-            // -----------------------------------------------------------------
-            fetch('fasilitas.json')
-                .then(response => response.json())
-                .then(data => {
-                    if(data.slider && data.slider.length > 0) {
-                        // 1. Kosongkan foto dummy (Pexels) dari layar
-                        slider.innerHTML = '';
-                        
-                        // 2. Buat kartu foto baru berdasarkan data dari CMS
-                        data.slider.forEach(item => {
-                            // Cek apakah foto ada, jika tidak pakai gambar abu-abu
-                            const fotoUrl = item.foto ? item.foto : 'https://via.placeholder.com/600x800?text=Foto+Fasilitas';
-                            
-                            const cardHTML = `
-                            <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
-                                <img src="${fotoUrl}" alt="${item.nama}" class="absolute inset-0 w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                                <div class="absolute bottom-6 left-6 right-6">
-                                    <h3 class="text-white font-bold text-lg md:text-xl">${item.nama}</h3>
-                                </div>
-                            </div>`;
-                            
-                            // Masukkan ke dalam slider
-                            slider.innerHTML += cardHTML;
-                        });
-                        
-                        // 3. Panggil ulang logika panah karena jumlah foto baru saja berubah
-                        checkArrows();
-                    }
-                })
-                .catch(error => console.log('Menunggu data fasilitas dari CMS...'));
+            fetch('fasilitas.json').then(r => r.json()).then(data => {
+                if(data.slider && data.slider.length > 0) {
+                    slider.innerHTML = '';
+                    data.slider.forEach(item => {
+                        const fotoUrl = item.foto || 'https://via.placeholder.com/600x800?text=Foto+Fasilitas';
+                        slider.innerHTML += `
+                        <div class="min-w-[240px] md:min-w-[280px] aspect-[3/4] snap-center rounded-[2rem] overflow-hidden relative shadow-sm">
+                            <img src="${fotoUrl}" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 right-6">
+                                <h3 class="text-white font-bold text-lg md:text-xl">${item.nama}</h3>
+                            </div>
+                        </div>`;
+                    });
+                    setTimeout(checkArrows, 100);
+                }
+            }).catch(() => {});
         }
 
-        // ---------------------------------------------------
-        // 4. FITUR FORMULIR PPDB (Kirim Data Latar Belakang)
-        // ---------------------------------------------------
-        const formPPDB = document.getElementById('form-ppdb');
-        
-        if (formPPDB) {
-            const btnSubmit = formPPDB.querySelector('button[type="submit"]');
-            
-            // ⚠️ PENTING: PASTIKAN LINK INI SUDAH DIGANTI DENGAN LINK GOOGLE SCRIPT-MU!
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxLB_nKWQyF0tIEIoBdqtnpPURvycuawsFYFiK3aJhrV4tL3EI7AV_u-Gx8pzz6O4gK0Q/exec';
+        // 4. Fitur Berita & Pop-up
+        const gridBerita = document.getElementById('grid-berita');
+        if (gridBerita) {
+            fetch('berita.json').then(r => r.json()).then(data => {
+                if (data.artikel && data.artikel.length > 0) {
+                    gridBerita.innerHTML = ''; 
+                    const beritaTerbaru = data.artikel.slice().reverse().slice(0, 3);
+                    
+                    beritaTerbaru.forEach((item, index) => {
+                        const fotoUrl = item.foto || 'https://via.placeholder.com/600x400?text=Berita+Sekolah';
+                        const cuplikan = item.cuplikan || 'Klik untuk membaca berita selengkapnya...';
+                        
+                        gridBerita.innerHTML += `
+                        <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group hover:shadow-md transition-all cursor-pointer" onclick="bacaBerita(${index})">
+                            <div class="relative h-56 overflow-hidden bg-slate-100">
+                                <img src="${fotoUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-600 shadow-sm">${item.kategori}</div>
+                            </div>
+                            <div class="p-6 md:p-8">
+                                <h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-teal-600 transition-colors">${item.judul}</h3>
+                                <p class="text-slate-500 text-sm mb-5 line-clamp-2 leading-relaxed">${cuplikan}</p>
+                                <div class="flex items-center text-teal-600 font-bold text-sm">
+                                    Baca Berita <svg class="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    window.dataBerita = beritaTerbaru;
+                }
+            }).catch(() => {});
+        }
 
+        window.bacaBerita = function(index) {
+            const artikel = window.dataBerita[index];
+            const fotoUrl = artikel.foto || 'https://via.placeholder.com/600x400?text=Berita+Sekolah';
+            Swal.fire({
+                title: `<div class="text-2xl md:text-3xl font-extrabold text-slate-900 text-left mt-2">${artikel.judul}</div>`,
+                html: `
+                    <div class="text-left mt-4">
+                        <span class="inline-block bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-bold mb-4">${artikel.kategori}</span>
+                        <div class="rounded-2xl overflow-hidden mb-6 shadow-sm"><img src="${fotoUrl}" class="w-full object-cover max-h-72"></div>
+                        <div class="text-slate-600 text-sm md:text-base leading-relaxed whitespace-pre-line">${artikel.isi}</div>
+                    </div>`,
+                showCloseButton: true,
+                showConfirmButton: false,
+                customClass: { popup: 'rounded-[2rem] md:w-3/4 max-w-2xl p-6 md:p-8' }
+            });
+        };
+
+        // 5. PPDB Google Sheets
+        const formPPDB = document.getElementById('form-ppdb');
+        if (formPPDB) {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxLB_nKWQyF0tIEIoBdqtnpPURvycuawsFYFiK3aJhrV4tL3EI7AV_u-Gx8pzz6O4gK0Q/exec';
             formPPDB.addEventListener('submit', e => {
                 e.preventDefault();
-                
-                // Animasi Loading pada tombol
+                const btnSubmit = formPPDB.querySelector('button[type="submit"]');
                 const originalText = btnSubmit.innerHTML;
+                
                 btnSubmit.innerHTML = 'Mengirim Data... ⏳';
                 btnSubmit.classList.add('opacity-75', 'cursor-not-allowed');
                 btnSubmit.disabled = true;
 
-                // Proses pengiriman data
                 fetch(scriptURL, { method: 'POST', body: new FormData(formPPDB)})
-                    .then(response => {
+                    .then(() => {
                         btnSubmit.innerHTML = originalText;
                         btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
                         btnSubmit.disabled = false;
                         formPPDB.reset();
-                        
-                        Swal.fire({
-                            title: 'Pendaftaran Berhasil!',
-                            text: 'Data putra/putri Anda telah masuk ke sistem kami.',
-                            icon: 'success',
-                            confirmButtonColor: '#0d9488',
-                            customClass: { popup: 'rounded-3xl' }
-                        });
+                        Swal.fire({ title: 'Pendaftaran Berhasil!', text: 'Data putra/putri Anda telah masuk ke sistem.', icon: 'success', confirmButtonColor: '#0d9488', customClass: { popup: 'rounded-3xl' } });
                     })
-                    .catch(error => {
+                    .catch(() => {
                         btnSubmit.innerHTML = originalText;
                         btnSubmit.classList.remove('opacity-75', 'cursor-not-allowed');
                         btnSubmit.disabled = false;
-                        
-                        Swal.fire({
-                            title: 'Oops!',
-                            text: 'Terjadi kesalahan jaringan. Silakan coba lagi.',
-                            icon: 'error',
-                            confirmButtonColor: '#0d9488'
-                        });
+                        Swal.fire({ title: 'Oops!', text: 'Terjadi kesalahan jaringan.', icon: 'error', confirmButtonColor: '#0d9488' });
                     });
             });
         }
     </script>
-    
 </body>
 </html>
